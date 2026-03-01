@@ -18,6 +18,8 @@ Runs fully inside a Docker container
 
 Uses a Docker volume for persistent storage
 
+The application image is available on Docker Hub:mallikarjun7/tic-tac-toe-game:1.0.0
+
 Tech Stack
 
 Python 3.12
@@ -29,3 +31,4 @@ SQLite
 Docker
 
 Docker Compose (optional)
+

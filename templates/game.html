@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XO Game</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 120px);
+            grid-gap: 10px;
+            justify-content: center;
+            margin: 30px auto;
+        }
+
+        button.tile {
+            width: 120px;
+            height: 120px;
+            font-size: 40px;
+            font-weight: bold;
+            border-radius: 15px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        button.tile:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 15px rgba(255,255,255,0.6);
+        }
+
+        .x {
+            background-color: #ff4b5c;
+            color: white;
+        }
+
+        .o {
+            background-color: #00c9a7;
+            color: white;
+        }
+
+        .empty {
+            background-color: rgba(255,255,255,0.2);
+            color: transparent;
+        }
+
+        .winner-text {
+            font-size: 28px;
+            color: #ffd700;
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .scoreboard {
+            background: rgba(255,255,255,0.15);
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .reset-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #ff9800;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        .reset-btn:hover {
+            background: #e68900;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>{{ player1 }} (X) vs {{ player2 }} (O)</h2>
+<h3>Turn: {{ current }}</h3>
+
+<form method="post" action="/move">
+    <div class="board">
+        {% for i in range(9) %}
+            {% if board[i] == "" and not winner %}
+                <button class="tile empty" name="position" value="{{ i }}"></button>
+            {% elif board[i] == "X" %}
+                <button class="tile x" disabled>X</button>
+            {% elif board[i] == "O" %}
+                <button class="tile o" disabled>O</button>
+            {% endif %}
+        {% endfor %}
+    </div>
+</form>
+
+{% if winner %}
+    <div class="winner-text">
+        {{ winner }} Wins!
+    </div>
+{% endif %}
+
+<div class="scoreboard">
+    <h3>Scoreboard</h3>
+    {% for s in scores %}
+        {{ s[0] }} : {{ s[1] }} wins <br>
+    {% endfor %}
+</div>
+
+<br>
+<a class="reset-btn" href="/reset">Reset Game</a>
+
+</body>
+</html>

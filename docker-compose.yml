@@ -1,0 +1,14 @@
+services:
+  tic-tac-toe_game:
+    build: .
+    container_name: x-o_container
+    ports:
+      - 5000:5000
+    volumes:
+      - score_db:/score.db
+    environment:
+      - DB_PATH=/data/score.db
+    
+volumes:
+  score_db:
+    
